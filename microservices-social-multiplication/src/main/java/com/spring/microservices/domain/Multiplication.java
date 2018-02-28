@@ -9,8 +9,6 @@ import lombok.ToString;
  * This class represents a Multiplication in our application.
  * This represents a Multiplication (a * b).
 */
-@RequiredArgsConstructor
-@Getter
 @ToString
 @EqualsAndHashCode
 public final class Multiplication {
@@ -27,4 +25,33 @@ public final class Multiplication {
 		this(0,0);
 	}
 
+	public Multiplication(int factorA, int factorB) {
+		this.factorA = factorA;
+		this.factorB = factorB;
+	}
+
+	public int getFactorA() {
+		return factorA;
+	}
+
+	public void setFactorA(int factorA) {
+		this.factorA = factorA;
+	}
+
+	public int getFactorB() {
+		return factorB;
+	}
+
+	public void setFactorB(int factorB) {
+		this.factorB = factorB;
+	}
+
+	public int getResult() {
+		return result;
+	}
+
+	public void setResult(int result) {
+		this.result = result;
+	}
+	
 }

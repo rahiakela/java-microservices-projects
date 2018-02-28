@@ -1,16 +1,12 @@
 package com.spring.microservices.domain;
 
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 /**
 * Identifies the attempt from a {@link User} to solve a
 * {@link Multiplication}.
 */
-@RequiredArgsConstructor
-@Getter
 @ToString
 @EqualsAndHashCode
 public final class MultiplicationResultAttempt {
@@ -25,4 +21,23 @@ public final class MultiplicationResultAttempt {
 		multiplication = null;
 		resultAttempt = -1;
 	}
+
+	public MultiplicationResultAttempt(User user, Multiplication multiplication, int resultAttempt) {
+		this.user = user;
+		this.multiplication = multiplication;
+		this.resultAttempt = resultAttempt;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public Multiplication getMultiplication() {
+		return multiplication;
+	}
+
+	public int getResultAttempt() {
+		return resultAttempt;
+	}
+	
 }

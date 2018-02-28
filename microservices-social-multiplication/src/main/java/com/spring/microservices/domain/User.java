@@ -8,8 +8,6 @@ import lombok.ToString;
 /**
 * Stores information to identify the user.
 */
-@RequiredArgsConstructor
-@Getter
 @ToString
 @EqualsAndHashCode
 public final class User {
@@ -20,4 +18,13 @@ public final class User {
 	protected User() {
 		alias = null;
 	}
+
+	public User(String alias) {
+		this.alias = alias;
+	}
+
+	public String getAlias() {
+		return alias;
+	}
+	
 }
