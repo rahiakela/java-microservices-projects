@@ -1,8 +1,14 @@
 package com.spring.microservices.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
@@ -10,8 +16,17 @@ import lombok.ToString;
  * This represents a Multiplication (a * b).
 */
 @ToString
+@Getter
+@Setter
 @EqualsAndHashCode
+@RequiredArgsConstructor
+@Entity
 public final class Multiplication {
+	
+	@Id
+	@GeneratedValue
+	@Column(name="MULTIPLICATION_ID")
+	private Long id;
 	
 	// Both factors
 	private int factorA;
@@ -21,37 +36,13 @@ public final class Multiplication {
 	private int result;
 
 	// Empty constructor for JSON (de)serialization
-	public Multiplication() {
+	/*public Multiplication() {
 		this(0,0);
-	}
+	}*/
 
 	public Multiplication(int factorA, int factorB) {
 		this.factorA = factorA;
 		this.factorB = factorB;
 	}
 
-	public int getFactorA() {
-		return factorA;
-	}
-
-	public void setFactorA(int factorA) {
-		this.factorA = factorA;
-	}
-
-	public int getFactorB() {
-		return factorB;
-	}
-
-	public void setFactorB(int factorB) {
-		this.factorB = factorB;
-	}
-
-	public int getResult() {
-		return result;
-	}
-
-	public void setResult(int result) {
-		this.result = result;
-	}
-	
 }

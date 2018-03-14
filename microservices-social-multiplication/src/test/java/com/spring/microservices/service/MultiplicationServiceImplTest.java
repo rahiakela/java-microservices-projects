@@ -8,9 +8,14 @@ import org.mockito.MockitoAnnotations;
 import com.spring.microservices.domain.Multiplication;
 import com.spring.microservices.domain.MultiplicationResultAttempt;
 import com.spring.microservices.domain.User;
+import com.spring.microservices.repository.MultiplicationResultAttemptRepository;
+import com.spring.microservices.repository.UserRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
+
+import java.util.Optional;
 
 public class MultiplicationServiceImplTest {
 	
@@ -18,12 +23,16 @@ public class MultiplicationServiceImplTest {
 	
 	@Mock
 	private RandomGeneratorService randomGeneratorService;
+	@Mock
+	private MultiplicationResultAttemptRepository attemptRepository;
+	@Mock
+	private UserRepository userRepository;
 	
 	@Before
 	public void setUp() {
 		// With this call to initMocks we tell Mockito to process the annotations
 		MockitoAnnotations.initMocks(this);
-		multiplicationServiceImpl = new MultiplicationServiceImpl(randomGeneratorService);
+		multiplicationServiceImpl = new MultiplicationServiceImpl(randomGeneratorService, attemptRepository, userRepository);
 	}
 	
 	@Test
@@ -46,13 +55,17 @@ public class MultiplicationServiceImplTest {
 		// given
 		Multiplication multiplication=new Multiplication(50,60);
 		User user = new User("Rahi Akela");
-		MultiplicationResultAttempt attempt = new MultiplicationResultAttempt(user, multiplication, 3000);
+		MultiplicationResultAttempt attempt = new MultiplicationResultAttempt(user, multiplication, 3000, false);
+		MultiplicationResultAttempt verifiedAttempt = new MultiplicationResultAttempt(user, multiplication, 3000, true);
+		
+		given(userRepository.findByAlias("Rahi Akela")).willReturn(Optional.empty());
 		
 		// when
 		boolean attemptResult = multiplicationServiceImpl.checkAttempt(attempt);
 		
-		// assert
+		// then
 		assertThat(attemptResult).isTrue();
+		verify(attemptRepository).save(verifiedAttempt);
 	}
 	
 	@Test
@@ -60,12 +73,15 @@ public class MultiplicationServiceImplTest {
 		// given
 		Multiplication multiplication=new Multiplication(50,60);
 		User user = new User("Rahi Akela");
-		MultiplicationResultAttempt attempt = new MultiplicationResultAttempt(user, multiplication, 3010);
+		MultiplicationResultAttempt attempt = new MultiplicationResultAttempt(user, multiplication, 3010, false);
+		
+		given(userRepository.findByAlias("Rahi Akela")).willReturn(Optional.empty());
 		
 		// when 
 		boolean attemptResult = multiplicationServiceImpl.checkAttempt(attempt);
 		
 		// assert
 		assertThat(attemptResult).isFalse();
+		verify(attemptRepository).save(attempt);
 	}
 }
