@@ -3,8 +3,12 @@ package com.spring.microservices.controller;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
+import java.util.List;
+
+import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,6 +41,7 @@ public class MultiplicationResultAttemptControllerTest {
 	// This object will be magically initialized by the initFields method below.
 	private JacksonTester<MultiplicationResultAttempt> jsonResult;
 	private JacksonTester<ResultResponse> jsonResponse;
+	private JacksonTester<List<MultiplicationResultAttempt>> jsonResultAttemptList;
 	
 	@Before
 	public void setup() {
@@ -51,6 +56,27 @@ public class MultiplicationResultAttemptControllerTest {
 	@Test
 	public void postResultReturnNotCorrect() throws Exception {
 		genericParameterizedTest(true);
+	}
+	
+	@Test
+	public void getUserStats() throws Exception {
+		// given
+		User user = new User("Rahi Akela");
+		Multiplication multiplication = new Multiplication(50, 70);
+		MultiplicationResultAttempt attempt = new MultiplicationResultAttempt(user, multiplication, 3500, true);
+		List<MultiplicationResultAttempt> recentAttempts = Lists.newArrayList(attempt, attempt);
+		
+		given(multiplicationService.getStatsForUser("Rahi Akela")).willReturn(recentAttempts);
+		
+		// when
+		MockHttpServletResponse response = mvc.perform(get("/results")
+				.param("alias", "Rahi Akela"))
+				.andReturn()
+				.getResponse();
+		
+		// then
+		assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+		assertThat(response.getContentAsString()).isEqualTo(jsonResultAttemptList.write(recentAttempts).getJson());
 	}
 	
 	void genericParameterizedTest(final boolean correct) throws Exception {

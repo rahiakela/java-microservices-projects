@@ -73,9 +73,11 @@ $(document).ready(function() {
 
         updateMultiplication();
 
+        updateStats(userAlias);
+        
         setTimeout(function(){
             var userId = updateResults(userAlias);
-            updateStats(userId);
+            //updateStats(userId);
             updateLeaderBoard();
         }, 300);
     });
