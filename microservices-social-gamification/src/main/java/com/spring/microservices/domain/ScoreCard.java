@@ -42,4 +42,13 @@ public final class ScoreCard {
 	
 	@Column(name = "SCORE")
 	private final int score;
+	
+	// Empty constructor for JSON / JPA
+    public ScoreCard() {
+        this(null, null, null, 0, 0);
+    }
+
+    public ScoreCard(final Long userId, final Long attemptId) {
+        this(null, userId, attemptId, System.currentTimeMillis(), DEFAULT_SCORE);
+    }
 }
