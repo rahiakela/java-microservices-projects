@@ -1,0 +1,25 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+*/*/target
+*/*/tmp
+*/*/out-tsc
+
+# dependencies
+*/*/.mvn
+
+# IDEs and editors
+*/*/.idea
+*/*/.c9/
+*/*.launch
+*/*/.settings/
+*.sublime-workspace
+
+
+
+# System Files
+*/.DS_Store
+*/*/Thumbs.db
+microservices-social-multiplication/pom.xml
+microservices-social-multiplication/src/main/java/com/spring/microservices/controller/MultiplicationController.java
+microservices-social-multiplication/src/test/java/com/spring/microservices/service/MultiplicationServiceImplTest.java
