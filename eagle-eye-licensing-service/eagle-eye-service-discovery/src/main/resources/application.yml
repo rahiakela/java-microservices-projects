@@ -1,0 +1,11 @@
+server:
+  port: 8761  # Eureka Server is going to listen on
+
+# The eureka.client.register-with-eureka attribute tells the service not to register with a Eureka service 
+# when the Spring Boot Eureka application starts because this is the Eureka service.
+# The eureka.client.fetch-registry attribute is set to false so that when the Eureka service starts,
+# it doesn’t try to cache its registry information locally. 
+eureka:
+  client:
+    register-with-eureka: false   # Don’t register with Eureka service.
+    fetch-registry: false         # Don’t cache registry information locally
