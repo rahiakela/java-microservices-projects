@@ -1,2 +1,2 @@
-# java-microservices-projects
+# spring-microservices-projects
 This repo is for node.js app
