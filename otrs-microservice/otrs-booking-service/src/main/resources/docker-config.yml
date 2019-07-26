@@ -1,0 +1,5 @@
+FROM openjdk:11-jre
+MAINTAINER Rahi Akela
+EXPOSE 8080
+COPY maven /maven/
+CMD java -Dspring.profiles.active="docker" -jar /maven/otrs-booking-service.jar server /maven/docker-config.yml

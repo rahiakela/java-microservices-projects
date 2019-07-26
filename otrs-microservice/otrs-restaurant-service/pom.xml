@@ -10,14 +10,14 @@
 	</parent>
 	<groupId>com.restaurant.service</groupId>
 	<artifactId>otrs-restaurant-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>otrs-restaurant-service</name>
 	<description>OTRS Microservices with Spring Boot and Spring Cloud</description>
 
 	<properties>
 		<start-class>com.restaurant.service.RestaurantServiceApplication</start-class>
     	<docker.registry.name>localhost:5000/</docker.registry.name>
-    	<docker.repository.name>${docker.registry.name}sourabhh/${project.artifactId}</docker.repository.name>
+    	<docker.repository.name>${docker.registry.name}rahiakela/${project.artifactId}</docker.repository.name>
     	<docker.host.address>192.168.43.194</docker.host.address>
     	<docker.port>8080</docker.port>
 		<java.version>1.8</java.version>
@@ -48,6 +48,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>otrs-restaurant-service</finalName>
 		<plugins>
 		
 			<plugin>

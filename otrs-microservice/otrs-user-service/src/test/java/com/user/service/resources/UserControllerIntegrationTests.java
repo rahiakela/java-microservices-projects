@@ -24,10 +24,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.user.service.OtrsUserServiceApplication;
+import com.user.service.UserServiceApplication;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes=OtrsUserServiceApplication.class, webEnvironment=WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes=UserServiceApplication.class, webEnvironment=WebEnvironment.RANDOM_PORT)
 public class UserControllerIntegrationTests {
 
 	//Required to Generate JSON content from Java objects

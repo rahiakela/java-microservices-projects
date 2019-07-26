@@ -27,12 +27,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.booking.service.OtrsBookingServiceApplication;
+import com.booking.service.BookingServiceApplication;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes= OtrsBookingServiceApplication.class, webEnvironment= WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes= BookingServiceApplication.class, webEnvironment= WebEnvironment.RANDOM_PORT)
 public class BookingControllerIntegrationTests {
 
 	//Required to Generate JSON content from Java objects
