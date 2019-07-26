@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: otrs-eureka-server
+    
+server:
+  port: ${vcap.application.port:8761}    # HTTP port
+  
+info:
+  component: Service Discovery Server  
+  
+eureka:
+  instance:
+    hostname: localhost   # Name of the host where the Eureka instance is running
+  client:
+    register-with-eureka: false   # whether you want to register with Eureka Server or not. set it to false to run it in standalone mode
+    fetch-registry: false   # whether you want to fetch the Eureka registry or not. set it to false to run it in standalone mode
+    service-url:
+      defaultZone: ${vcap.services.${PREFIX:}eureka.credentials.uri:http://user:password@localhost:8761}/eureka/
+  server:
+    wait-time-in-ms-when-sync-empty: 0    # refer to the warm-up time when Eureka Server is started with an empty registry
+    enable-self-preservation: false       # Self preservation protects Eureka registry data from catastrophic network events.
+    
+    
+---
+# For deployment in Docker containers
+spring:
+  profiles: docker
+
+server:
+    port: ${vcap.application.port:8761}
+
+eureka:
+    instance:
+          hostname: eureka
+    client:
+        registerWithEureka: false
+        fetchRegistry: false
+        serviceUrl:
+          defaultZone: http://eureka:8761/eureka/
+    server:
+        waitTimeInMsWhenSyncEmpty: 0
+        enableSelfPreservation: false          
