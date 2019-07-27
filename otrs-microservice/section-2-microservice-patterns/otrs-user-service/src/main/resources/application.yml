@@ -9,6 +9,23 @@ spring:
 server:
   port: 2224   # HTTP (Tomcat) port
 
+# Discovery Server Access
+eureka:
+  instance:
+    lease-renewal-interval-in-seconds: 10    # sends periodic heartbeats to Eureka Server to let it know that it is still alive
+    lease-expiration-duration-in-seconds: 20 # waits for the time defined using this property after no heartbeats are received from the client instance
+    metadata-map:   # the client instance ID that is used to register on the Eureka Server registry
+      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${random.value}}}
+      
+  client:
+    registry-fetch-interval-seconds: 5  #  determines the periodic interval when the Eureka client fetches the registry information from Eureka Server. 
+    instance-info-replication-interval-seconds: 5   # determines when to replicate the instance changes to Eureka Server
+    initial-instance-info-replication-interval-seconds: 5
+    service-url:    # The instance sends heartbeats using the service URL to the Eureka Server registry
+      defaultZone: ${vcap.services.${PREFIX:}eureka.credentials.uri:http://user:password@localhost:8761}/eureka/
+    fetch-registry: true   # whether the client should fetch registry information from Eureka Server or not   
+ 
+
 ---
 # For deployment in Docker containers
 spring:
@@ -19,4 +36,20 @@ spring:
     
 server:
   port: 8080
+  
+# Discovery Server Access 
+eureka:
+  instance:
+    prefer-ip-address: true   # whether the IP address should be used or not, while updating the client instance details in the Eureka registry
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 20
+  client:
+    registry-fetch-interval-seconds: 5
+    instance-info-replication-interval-seconds: 5
+    initial-instance-info-replication-interval-seconds: 5
+    service-url:
+      defaultZone: http://eureka:8761/eureka/
+      fetchRegistry: true
+      healthcheck:  # whether the health check API should be used or not
+        enabled: true   
       
