@@ -1,0 +1,22 @@
+#management:
+#  security:
+#    enabled: false
+    
+spring:
+  profiles: jdbc
+  cloud:
+    config:
+      uri: http://localhost:8888  # This is the URI of Config Server.
+      fail-fast: false  # whether the application startup failed if the client does not connect to Config Server.
+      label: master   #  This represents the label of the versioned configuration sets
+      
+---
+# For deployment in Docker containers      
+spring:
+  profiles: docker
+  aop: 
+   auto: false
+  cloud:
+    config:
+      uri: http://config:8888
+      fail-fast: true      
