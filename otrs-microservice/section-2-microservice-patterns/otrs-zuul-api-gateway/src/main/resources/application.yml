@@ -1,0 +1,57 @@
+spring:
+  application:
+    name: zuul-api-gateway  # Service registers under this name
+
+#endpoints:
+#  restart:
+#    enabled: true
+#  shutdown:
+#     enabled: true
+#  health:
+#    sensitive: false      
+
+zuul:
+  ignored-services: "*" # ignore the automatic addition of service routes
+  routes:               # configuring routes
+    restaurant-api:     # configured route for restaurant-service
+      path: /restaurant/**
+      service-id: restaurant-service
+      strip-prefix: true  
+    booking-api:        # configured route for booking-service
+      path: /booking/**
+      service-id: booking-service
+      strip-prefix: true 
+    users-api:          # configured route for users-service
+      path: /users/**
+      service-id: user-service
+      strip-prefix: true    
+      
+server:
+  port: 8765
+  compression:
+    enabled: true       
+    
+# Discovery Server Access
+eureka:
+  instance:
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 5  
+    metadata-map:
+      instance-id:  ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id}:${random.value}}
+  client:
+    registry-fetch-interval-seconds: 5
+    instance-info-replication-interval-seconds: 5
+    initial-instance-info-replication-interval-seconds: 5
+    service-url:
+      defaultZone: ${vcap.services.${PREFIX:}eureka.credentials.uri:http://user:password@localhost:8761}/eureka/
+    fetch-registry: true
+    
+logging:
+  level:
+    ROOT: INFO
+    org.springframework.web: INFO
+    
+app:
+  ConnectTimeout: 100
+  ReadTimeout:  3000
+            

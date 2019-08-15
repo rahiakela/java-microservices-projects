@@ -7,7 +7,8 @@ spring:
   cloud:
     config:
       uri: http://localhost:8888  # This is the URI of Config Server.
-      fail-fast: false  # whether the application startup failed if the client does not connect to Config Server.
+      name: otrs-config-server
+      fail-fast: true  # whether the application startup failed if the client does not connect to Config Server.
       label: master   #  This represents the label of the versioned configuration sets
       
 ---
@@ -18,5 +19,6 @@ spring:
    auto: false
   cloud:
     config:
-      uri: http://config:8888
+      uri: http://otrs-config-server:8888
+      name: otrs-config-server
       fail-fast: true      

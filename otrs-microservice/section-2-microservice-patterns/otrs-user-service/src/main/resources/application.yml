@@ -4,16 +4,16 @@ spring:
     name: user-service  # Service registers under this name
   messages:
     fallback-to-system-locale: false
-  cloud:
-    config:
-      uri: http://localhost:8888  # This is the URI of Config Server.
-      fail-fast: false  # whether the application startup failed if the client does not connect to Config Server.
-      label: master   #  This represents the label of the versioned configuration sets
+#  cloud:
+#    config:
+#      uri: http://localhost:8888  # This is the URI of Config Server.
+#      fail-fast: false  # whether the application startup failed if the client does not connect to Config Server.
+#      label: master   #  This represents the label of the versioned configuration sets
 
 # default message for config server
 app:
   greet:
-    msg: Hello Microservice!
+    message: Hello Microservice!
  
 # This represents the endpoints that you want to expose  
 management:
