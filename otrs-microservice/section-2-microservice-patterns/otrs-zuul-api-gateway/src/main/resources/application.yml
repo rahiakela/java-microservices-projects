@@ -1,18 +1,30 @@
+server:
+  port: 8765
+  compression:
+    enabled: true  
+    
 spring:
   application:
     name: zuul-api-gateway  # Service registers under this name
-
-#endpoints:
-#  restart:
-#    enabled: true
-#  shutdown:
-#     enabled: true
-#  health:
-#    sensitive: false      
-
+  security:    user:      password: password
+    oauth2:      client:
+        client-id: client
+        client-secret: secret123
+        scope: apiAccess        access-token-uri: http://localhost:9001/auth/oauth/token
+        user-authorization-uri: http://localhost:9001/auth/oauth/authorize
+        client-authentication-scheme: form
+      resource:        filter-order: 3
+        #      tokenInfoUri: http://localhost:9001/auth/oauth/check_token        userInfoUri: http://localhost:9001/auth/me
+        #      preferTokenInfo: false
+    sessions: ALWAYS         
 zuul:
   ignored-services: "*" # ignore the automatic addition of service routes
+  sensitive-headers:
   routes:               # configuring routes
+    auth-api:
+      path: /authapi/**
+      service-id: security-service
+      strip-prefix: true 
     restaurant-api:     # configured route for restaurant-service
       path: /restaurant/**
       service-id: restaurant-service
@@ -25,11 +37,6 @@ zuul:
       path: /users/**
       service-id: user-service
       strip-prefix: true    
-      
-server:
-  port: 8765
-  compression:
-    enabled: true       
     
 # Discovery Server Access
 eureka:
@@ -54,4 +61,11 @@ logging:
 app:
   ConnectTimeout: 100
   ReadTimeout:  3000
-            
+       
+#endpoints:
+#  restart:
+#    enabled: true
+#  shutdown:
+#     enabled: true
+#  health:
+#    sensitive: false              
